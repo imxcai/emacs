@@ -4,73 +4,10 @@
 ;; You may delete these explanatory comments.
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 (require 'init-packages)
-(setq ring-bell-function 'ignore)
+(require 'init-ui)
+(require 'init-better-default)
+(require 'init-org)
+(require 'init-keybinds)
+(require 'init-custom)
 
-
-;; enable this if you want `swiper' to use it
-;; (setq search-default-mode #'char-fold-to-regexp)
-(global-set-key "\C-s" 'swiper)
-(global-set-key (kbd "C-c C-r") 'ivy-resume)
-(global-set-key (kbd "<f6>") 'ivy-resume)
-(global-set-key (kbd "M-x") 'counsel-M-x)
-(global-set-key (kbd "C-x C-f") 'counsel-find-file)
-
-
-(setq initial-frame-alist(quote ((fullscreen . maximized))))
-(tool-bar-mode -1)
-(menu-bar-mode -1)
-(scroll-bar-mode -1)
-(global-linum-mode 1)
-(delete-selection-mode t)
-(setq inhibit-splash-screen -1)
-(setq-default cursor-type 'bar)
-(set-face-attribute 'default nil :height 120)
-(defun open-init-file()
-  (interactive)
-  (find-file "~/.emacs.d/init.el"))
-(global-set-key (kbd "<f2>") 'open-init-file)
-(global-company-mode 1)
-
-(require 'org)
-(setq org-src-fontify-natively t)
-
-(require 'recentf)
-(recentf-mode 1)
-(setq recentf-max-menu-items 25)
-(global-set-key "\C-x\ \C-r" 'recentf-open-files)
-(add-hook 'emacs-lisp-mode-hook 'show-paren-mode)
-(global-hl-line-mode t)
-(global-set-key (kbd "C-h C-f") 'find-function)
-(global-set-key (kbd "C-h C-v") 'find-variable)
-(global-set-key (kbd "C-h C-k") 'find-function-on-key)
-(global-auto-revert-mode t)
-;; 设置默认 Org Agenda 文件目录
-(setq org-agenda-files '("~/org"))
-;; 设置 org-agenda 打开快捷键
-(global-set-key (kbd "C-c a") 'org-agenda)
-(setq-default abbrev-mode t)
-(define-abbrev-table 'global-abbrev-table '(
-					    ;; Shifu
-					    ("8zl" "zilongshanren")
-					    ;; Tudi
-					    ("8lxy" "lixinyang")
-					   ))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(company-idle-delay 0.08)
- '(company-minimum-prefix-length 1)
- '(custom-safe-themes
-   (quote
-    ("7f1d414afda803f3244c6fb4c2c64bea44dac040ed3731ec9d75275b9e831fe5" "0fffa9669425ff140ff2ae8568c7719705ef33b7a927a0ba7c5e2ffcfac09b75" "a2cde79e4cc8dc9a03e7d9a42fabf8928720d420034b66aecc5b665bbf05d4e9" default)))
- '(package-selected-packages
-   (quote
-    (popwin htmlize smartparens counsel swiper company hungry-delete))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+(setq custom-file (expand-file-name "lisp/init-custom.el" user-emacs-directory))
