@@ -2,48 +2,11 @@
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
-(when (>= emacs-major-version 24)
-     (require 'package)
-     (package-initialize)
-     (setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
-		      ("melpa" . "http://elpa.emacs-china.org/melpa/"))))
-
-;; 注意 elpa.emacs-china.org 是 Emacs China 中文社区在国内搭建的一个 ELPA 镜像
-
- ;; cl - Common Lisp Extension 
- (require 'cl)
-
- ;; Add Packages
- (defvar my/packages '(
-		;; --- Auto-completion ---
-		company
-		;; --- Better Editor ---
-		hungry-delete
-		swiper
-		counsel
-		smartparens
-		) "Default packages")
-
- (setq package-selected-packages my/packages)
-
- (defun my/packages-installed-p ()
-     (loop for pkg in my/packages
-	   when (not (package-installed-p pkg)) do (return nil)
-	   finally (return t)))
-
- (unless (my/packages-installed-p)
-     (message "%s" "Refreshing package database...")
-     (package-refresh-contents)
-     (dolist (pkg my/packages)
-       (when (not (package-installed-p pkg))
-	 (package-install pkg))))
+(add-to-list 'load-path "~/.emacs.d/lisp/")
+(require 'init-packages)
+(setq ring-bell-function 'ignore)
 
 
-(require 'hungry-delete)
-(global-hungry-delete-mode)
-(ivy-mode 1)
-(setq ivy-use-virtual-buffers t)
-(setq enable-recursive-minibuffers t)
 ;; enable this if you want `swiper' to use it
 ;; (setq search-default-mode #'char-fold-to-regexp)
 (global-set-key "\C-s" 'swiper)
@@ -52,8 +15,6 @@
 (global-set-key (kbd "M-x") 'counsel-M-x)
 (global-set-key (kbd "C-x C-f") 'counsel-find-file)
 
-(require 'smartparens-config)
-(smartparens-global-mode t)
 
 (setq initial-frame-alist(quote ((fullscreen . maximized))))
 (tool-bar-mode -1)
@@ -63,7 +24,7 @@
 (delete-selection-mode t)
 (setq inhibit-splash-screen -1)
 (setq-default cursor-type 'bar)
-(set-face-attribute 'default nil :height 160)
+(set-face-attribute 'default nil :height 120)
 (defun open-init-file()
   (interactive)
   (find-file "~/.emacs.d/init.el"))
@@ -83,6 +44,17 @@
 (global-set-key (kbd "C-h C-v") 'find-variable)
 (global-set-key (kbd "C-h C-k") 'find-function-on-key)
 (global-auto-revert-mode t)
+;; 设置默认 Org Agenda 文件目录
+(setq org-agenda-files '("~/org"))
+;; 设置 org-agenda 打开快捷键
+(global-set-key (kbd "C-c a") 'org-agenda)
+(setq-default abbrev-mode t)
+(define-abbrev-table 'global-abbrev-table '(
+					    ;; Shifu
+					    ("8zl" "zilongshanren")
+					    ;; Tudi
+					    ("8lxy" "lixinyang")
+					   ))
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -95,7 +67,7 @@
     ("7f1d414afda803f3244c6fb4c2c64bea44dac040ed3731ec9d75275b9e831fe5" "0fffa9669425ff140ff2ae8568c7719705ef33b7a927a0ba7c5e2ffcfac09b75" "a2cde79e4cc8dc9a03e7d9a42fabf8928720d420034b66aecc5b665bbf05d4e9" default)))
  '(package-selected-packages
    (quote
-    (htmlize smartparens counsel swiper company hungry-delete))))
+    (popwin htmlize smartparens counsel swiper company hungry-delete))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
